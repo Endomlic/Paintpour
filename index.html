@@ -4,7 +4,155 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paint Pour Playground Clone</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com">
+        const canvas = document.getElementById('paintCanvas');
+const ctx = canvas.getContext('2d');
+const paletteContainer = document.getElementById('palette');
+
+const colors = ['#FF0055', '#00FFCC', '#FFCC00', '#9900FF', '#FFFFFF', '#111111', '#555555'];
+let activeColor = colors[0];
+let isPouring = false;
+let brushSize = 15;
+let particles = [];
+let lastMouse = { x: 0, y: 0 };
+
+// 1. Initialize Palette with Selection UI
+colors.forEach((color) => {
+    const btn = document.createElement('div');
+    btn.className = `swatch ${color === activeColor ? 'active' : ''}`;
+    btn.style.backgroundColor = color;
+    btn.style.boxShadow = `0 4px 10px ${color}44`;
+    btn.onclick = () => {
+        document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+        btn.classList.add('active');
+        activeColor = color;
+    };
+    paletteContainer.appendChild(btn);
+});
+
+// 2. Responsive Canvas Setup
+function resize() {
+    // Save current content
+    const tempCanvas = document.createElement('canvas');
+    const tempCtx = tempCanvas.getContext('2d');
+    tempCanvas.width = canvas.width;
+    tempCanvas.height = canvas.height;
+    tempCtx.drawImage(canvas, 0, 0);
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    // Restore content after resize
+    ctx.drawImage(tempCanvas, 0, 0);
+}
+window.addEventListener('resize', resize);
+resize();
+
+// 3. Advanced Particle Class (Fluid Simulation)
+class Puddle {
+    constructor(x, y, color, vx, vy) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.size = Math.random() * 5 + 2;
+        this.growth = Math.random() * 3 + 2;
+        this.vx = vx + (Math.random() - 0.5) * 2; // Inherited velocity from mouse
+        this.vy = vy + Math.random() * 3;         // Gravity + mouse drag
+        this.viscosity = 0.96 + Math.random() * 0.03;
+    }
+
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.size += this.growth;
+        
+        // Decay physics
+        this.growth *= 0.97;
+        this.vx *= this.viscosity;
+        this.vy *= this.viscosity;
+    }
+
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+}
+
+// 4. Input Handling (Mouse/Touch)
+function getCoords(e) {
+    const x = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+    const y = e.clientY || (e.touches ? e.touches[0].clientY : 0);
+    return { x, y };
+}
+
+function handleStart(e) {
+    isPouring = true;
+    const coords = getCoords(e);
+    lastMouse = coords;
+}
+
+function handleMove(e) {
+    if (!isPouring) return;
+    const coords = getCoords(e);
+    
+    // Calculate speed of mouse movement
+    const dx = coords.x - lastMouse.x;
+    const dy = coords.y - lastMouse.y;
+
+    // Create "drops" based on movement speed (splatter effect)
+    const density = Math.hypot(dx, dy) > 10 ? 5 : 2;
+    for (let i = 0; i < density; i++) {
+        particles.push(new Puddle(
+            coords.x + (Math.random() - 0.5) * 20,
+            coords.y + (Math.random() - 0.5) * 20,
+            activeColor,
+            dx * 0.2, // Splatter direction
+            dy * 0.2
+        ));
+    }
+    lastMouse = coords;
+}
+
+canvas.addEventListener('pointerdown', handleStart);
+window.addEventListener('pointermove', handleMove);
+window.addEventListener('pointerup', () => isPouring = false);
+
+// 5. Animation Loop
+function animate() {
+    // Subtle background persistence
+    ctx.fillStyle = 'rgba(10, 10, 10, 0.005)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.update();
+        p.draw();
+        // Remove static/tiny particles to save memory
+        if (p.growth < 0.05 && Math.abs(p.vx) < 0.1) {
+            particles.splice(i, 1);
+        }
+    }
+    requestAnimationFrame(animate);
+}
+
+// 6. Utility Functions
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles = [];
+}
+
+function downloadImage() {
+    const link = document.createElement('a');
+    link.download = 'my-pour-art.png';
+    link.href = canvas.toDataURL();
+    link.click();
+}
+
+animate();
+
+    </script>
     <style>
         body { margin: 0; overflow: hidden; background: #0a0a0a; font-family: sans-serif; }
         canvas { display: block; touch-action: none; }
