@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paint Pour Playground | Techniques</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <nav class="border-b bg-white/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="font-bold text-xl tracking-tight text-blue-600">Paint Pour <span class="text-slate-400">Playground</span></h1>
+            <div class="space-x-6 text-sm font-medium">
+                <a href="#" class="text-blue-600">Techniques</a>
+                <a href="#calculator" class="text-slate-500 hover:text-slate-900">Calculator</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="max-w-5xl mx-auto px-6 py-16 text-center">
+        <h2 class="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4">Master Fluid Art</h2>
+        <p class="text-lg text-slate-600 max-w-2xl mx-auto">Explore the core techniques used to create stunning acrylic cells and patterns.</p>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 pb-24">
+        <div class="grid gap-8 md:grid-cols-2">
+            
+            <div class="bg-white border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div class="h-40 bg-gradient-to-br from-purple-400 to-blue-500 rounded-xl mb-4 flex items-center justify-center text-white font-bold">Flip Cup</div>
+                <h3 class="text-xl font-bold mb-2">Flip Cup</h3>
+                <p class="text-slate-600 text-sm mb-4">The classic beginner's favorite. Layer your colors in a cup, flip it onto the canvas, and lift to release.</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-2 py-1 bg-slate-100 text-xs font-semibold rounded-md">Beginner</span>
+                    <span class="px-2 py-1 bg-slate-100 text-xs font-semibold rounded-md text-blue-500">High Cells</span>
+                </div>
+            </div>
+
+            <div class="bg-white border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div class="h-40 bg-gradient-to-br from-pink-400 to-orange-400 rounded-xl mb-4 flex items-center justify-center text-white font-bold">Dutch Pour</div>
+                <h3 class="text-xl font-bold mb-2">Dutch Pour</h3>
+                <p class="text-slate-600 text-sm mb-4">Uses a hairdryer to blow paint across the surface, creating airy, organic petal-like movements.</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-2 py-1 bg-slate-100 text-xs font-semibold rounded-md">Intermediate</span>
+                    <span class="px-2 py-1 bg-slate-100 text-xs font-semibold rounded-md text-blue-500">Fluid Flow</span>
+                </div>
+            </div>
+
+            <div class="bg-white border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div class="h-40 bg-gradient-to-br from-green-400 to-teal-500 rounded-xl mb-4 flex items-center justify-center text-white font-bold">Swipe</div>
+                <h3 class="text-xl font-bold mb-2">The Swipe</h3>
+                <p class="text-slate-600 text-sm mb-4">Pour bands of color, then use a tool (paper towel or knife) to "swipe" a thin layer over the top.</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-2 py-1 bg-slate-100 text-xs font-semibold rounded-md">Easy</span>
+                    <span class="px-2 py-1 bg-slate-100 text-xs font-semibold rounded-md text-blue-500">Lacing Effect</span>
+                </div>
+            </div>
+
+            <div class="bg-white border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div class="h-40 bg-gradient-to-br from-yellow-400 to-red-500 rounded-xl mb-4 flex items-center justify-center text-white font-bold">Tree Ring</div>
+                <h3 class="text-xl font-bold mb-2">Tree Ring</h3>
+                <p class="text-slate-600 text-sm mb-4">Poured in small concentric circles using a steady hand to mimic the rings of a tree.</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-2 py-1 bg-slate-100 text-xs font-semibold rounded-md">Pro Control</span>
+                    <span class="px-2 py-1 bg-slate-100 text-xs font-semibold rounded-md text-blue-500">Patterns</span>
+                </div>
+            </div>
+        </div>
+
+        <section id="calculator" class="mt-24 bg-blue-600 rounded-3xl p-8 md:p-12 text-white">
+            <h2 class="text-3xl font-bold mb-6">Paint Volume Calculator</h2>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-4">
+                    <p class="text-blue-100">Calculate exactly how many ounces (oz) of paint you need for your canvas.</p>
+                    <div class="flex gap-4">
+                        <input type="number" id="width" placeholder="Width (in)" class="w-full p-3 rounded-xl text-slate-900 focus:outline-none">
+                        <input type="number" id="length" placeholder="Length (in)" class="w-full p-3 rounded-xl text-slate-900 focus:outline-none">
+                    </div>
+                    <button onclick="calculatePaint()" class="w-full bg-white text-blue-600 font-bold py-3 rounded-xl hover:bg-blue-50 transition-colors">Calculate</button>
+                </div>
+                <div class="text-center bg-blue-700/50 p-6 rounded-2xl border border-blue-400/30">
+                    <p class="text-sm uppercase tracking-widest text-blue-200">Recommended Total</p>
+                    <div class="text-6xl font-black mt-2"><span id="result">0</span><span class="text-2xl ml-1">oz</span></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t py-12 text-center text-slate-400 text-sm">
+        &copy; 2024 Paint Pour Playground Clone. Built for GitHub Pages.
+    </footer>
+
+    <script>
+        function calculatePaint() {
+            const w = document.getElementById('width').value;
+            const l = document.getElementById('length').value;
+            if (w > 0 && l > 0) {
+                // Rule of thumb: (Area / 25) = Ounces needed
+                const oz = (w * l) / 25;
+                document.getElementById('result').innerText = oz.toFixed(1);
+            }
+        }
+    </script>
+</body>
+</html>
