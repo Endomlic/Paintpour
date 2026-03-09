@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paint Pour Playground | Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <nav class="fixed w-full z-50 glass border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-lg"></div>
+                <span class="font-bold text-xl tracking-tight">PourPlayground</span>
+            </div>
+            <div class="hidden md:flex gap-8 text-sm font-semibold text-gray-600">
+                <a href="#calculator" class="hover:text-indigo-600 transition">Calculator</a>
+                <a href="#techniques" class="hover:text-indigo-600 transition">Techniques</a>
+                <a href="https://github.com" class="bg-gray-900 text-white px-4 py-2 rounded-full hover:bg-gray-800 transition">View Source</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-16 px-6 text-center">
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
+            The ultimate <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">fluid art</span> toolkit.
+        </h1>
+        <p class="text-gray-500 text-lg md:text-xl max-w-2xl mx-auto">
+            Calculate paint ratios, explore pouring techniques, and plan your next masterpiece with precision.
+        </p>
+    </header>
+
+    <section id="calculator" class="max-w-4xl mx-auto px-6 py-12">
+        <div class="bg-white rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 p-8 md:p-12">
+            <div class="flex flex-col md:flex-row gap-12 items-center">
+                <div class="flex-1 space-y-6">
+                    <h2 class="text-3xl font-bold">Paint Volume Calculator</h2>
+                    <p class="text-gray-500">Enter your canvas dimensions to find out exactly how much paint you need (total ounces).</p>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Width (in)</label>
+                            <input type="number" id="width" placeholder="12" class="w-full bg-gray-50 border border-gray-200 p-4 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Height (in)</label>
+                            <input type="number" id="height" placeholder="12" class="w-full bg-gray-50 border border-gray-200 p-4 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                        </div>
+                    </div>
+                    <button onclick="calculate()" class="w-full bg-indigo-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition">Calculate Mix</button>
+                </div>
+
+                <div class="w-full md:w-64 bg-indigo-50 rounded-2xl p-8 text-center">
+                    <span class="text-indigo-600 font-bold text-sm uppercase">Total Ounces</span>
+                    <div class="text-6xl font-black text-indigo-900 my-2" id="result">0</div>
+                    <p class="text-indigo-400 text-sm italic">Based on 1oz per 25sq in</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="techniques" class="max-w-6xl mx-auto px-6 py-24">
+        <h2 class="text-3xl font-bold mb-12 text-center">Popular Techniques</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="group bg-white p-2 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition duration-300">
+                <div class="h-48 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-600 mb-4 overflow-hidden relative">
+                    <div class="absolute inset-0 opacity-20 group-hover:scale-110 transition duration-500 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-xl mb-2">Dirty Pour / Flip Cup</h3>
+                    <p class="text-gray-500 text-sm">Layering all colors in one cup and flipping it onto the canvas for high-contrast cells.</p>
+                </div>
+            </div>
+
+            <div class="group bg-white p-2 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition duration-300">
+                <div class="h-48 rounded-xl bg-gradient-to-br from-pink-400 to-rose-600 mb-4 overflow-hidden relative">
+                    <div class="absolute inset-0 opacity-20 group-hover:scale-110 transition duration-500 bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')]"></div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-xl mb-2">Dutch Pour</h3>
+                    <p class="text-gray-500 text-sm">Using air (blow dryer or straw) to spread paint, creating soft, ethereal wisps and petals.</p>
+                </div>
+            </div>
+
+            <div class="group bg-white p-2 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition duration-300">
+                <div class="h-48 rounded-xl bg-gradient-to-br from-amber-400 to-orange-600 mb-4 overflow-hidden relative">
+                    <div class="absolute inset-0 opacity-20 group-hover:scale-110 transition duration-500 bg-[url('https://www.transparenttextures.com/patterns/hexellence.png')]"></div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-xl mb-2">Tree Ring</h3>
+                    <p class="text-gray-500 text-sm">Pouring small, concentric circles to mimic the rings of a tree trunk with precise control.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 border-t border-gray-200 text-center text-gray-400 text-sm">
+        <p>&copy; 2026 Fluid Art Studio. Built with Tailwind CSS.</p>
+    </footer>
+
+    <script>
+        function calculate() {
+            const w = document.getElementById('width').value;
+            const h = document.getElementById('height').value;
+            if(w > 0 && h > 0) {
+                const total = (w * h) / 25; // Standard rule of thumb
+                document.getElementById('result').innerText = total.toFixed(1);
+            }
+        }
+    </script>
+</body>
+</html>
